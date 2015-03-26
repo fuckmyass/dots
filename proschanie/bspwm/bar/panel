@@ -1,0 +1,20 @@
+#!/bin/sh
+cd $(dirname $0)
+if [ $(pgrep -cx panel) -gt 1 ]; then
+printf "%s\n" 'The panel is already running.' >&2
+exit 1
+else
+# just so I know it's working
+printf 'Now running...\n'
+fi
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+# make space for panel
+PANEL_HEIGHT=20
+bspc config top_padding $PANEL_HEIGHT
+# load colors for defining Dzen2 BG and FG
+source ./panel_colors
+# run Dzen2 with BSPWM info
+bspc control --subscribe | ~/.config/bspwm/panel_dzen2 | dzen2 -x 32 -y 10 -w 300 -h $PANEL_HEIGHT -ta 'l' -title-name 'panel' -fn '-*-m+ 1m bold-*-r-*-*-12-*-*-*-*-*-iso10646-1' -fg "$COLOR_FOREGROUND" -bg "$COLOR_BACKGROUND" &
+# run Dzen2 with Conky info
+conky -c ~/.config/bspwm/panel_conky | dzen2 -x 330 -y 10 -w 1005 -h $PANEL_HEIGHT -ta 'r' -title-name 'panel' -fn '-*-m+ 1m bold-*-r-*-*-12-*-*-*-*-*-iso10646-1' -fg "$COLOR_FOREGROUND" -bg "$COLOR_BACKGROUND" &
+wait

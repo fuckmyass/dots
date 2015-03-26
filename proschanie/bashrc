@@ -1,0 +1,202 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# If not running interactively, do not do anything
+#[[ $- != *i* ]] && return
+#[[ -z "$TMUX" ]] && exec tmux
+
+#aliases
+## Modified commands ## {{{
+alias diff='colordiff'              # requires colordiff package
+alias grep='grep --color=auto'
+alias more='less'
+alias df='df -h'
+alias du='du -c -h'
+alias mkdir='mkdir -p -v'
+alias nano='nano -w'
+alias ping='ping -c 5'
+alias dmesg='dmesg -HL'
+# }}}
+
+## New commands ## {{{
+alias da='date "+%A, %B %d, %Y [%T]"'
+alias du1='du --max-depth=1'
+alias hist='history | grep'         # requires an argument
+alias openports='ss --all --numeric --processes --ipv4 --ipv6'
+alias pgg='ps -Af | grep'           # requires an argument
+alias ..='cd ..'
+# }}}
+
+# Privileged access
+if [ $UID -ne 0 ]; then
+    alias sudo='sudo '
+    alias scat='sudo cat'
+    alias svim='sudoedit'
+    alias root='sudo -s'
+    alias reboot='sudo systemctl reboot'
+    alias poweroff='sudo systemctl poweroff'
+    alias update='sudo pacman -Su'
+    alias netctl='sudo netctl'
+fi
+
+## ls ## {{{
+alias ls='ls -hF --color'    # add colors for filetype recognition
+alias lx='ls -lXB'        # sort by extension
+alias lk='ls -lSr'        # sort by size
+alias la='ls -Al'        # show hidden files
+alias lr='ls -lR'        # recursice ls
+alias lt='ls -ltr'        # sort by date
+alias lm='ls -al |more'        # pipe through 'more'
+alias ll='ls -l'        # long listing
+alias lsize='ls --sort=size -lhr' # list by size
+alias lsd='ls -l | grep "^d"'   #list only directories
+alias lalf='ls -alF'
+# }}}
+
+## Safety features ## {{{
+alias rm='rm -i'
+alias cp='cp -v -i'
+alias mv='mv -i'
+# safer alternative w/ timeout, not stored in history
+alias rm=' timeout 3 rm -Iv --one-file-system'
+alias ln='ln -i'
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+alias cls=' echo -ne "\033c"'       # clear screen for real (it does not work in Terminology)
+alias reboot='sudo shutdown -r now'
+alias shutdown='sudo shutdown -h now'
+# }}}
+
+## Make Bash error tolerant ## {{{
+alias :q=' exit'
+alias :Q=' exit'
+alias :x=' exit'
+alias cd..='cd ..'
+# }}}
+
+#toilet
+alias gaym='toilet --gay -f mono9 -t'
+alias gayf='toilet --gay -f future -t'
+alias gayt='toilet --gay -f term -t'
+alias gayp='toilet --gay -f pagga -t'
+alias metm='toilet --metal -f mono9 -t'
+alias metf='toilet --metal -f future -t'
+alias mett='toilet --metal -f term -t'
+alias metp='toilet --metal -f pagga -t'
+alias 3d='figlet -f 3d'
+# }}}
+
+## Other aliases
+alias fonts='mkfontdir;mkfontscale;xset fp rehash;fc-cache;fc-cache -fv'
+alias starwars='telnet towel.blinkenlights.nl'
+alias reload='source ~/.bashrc'
+alias wifi='sudo wifi-menu'
+alias acyl='cd ~/.icons/ACYL_Icon_Theme_0.9.4/ && bash AnyColorYouLike'
+alias gp='git pull'
+alias x='startx'
+alias xini='nano ~/.xinitrc'
+alias resource='xrdb -load ~/.Xresources'
+alias dm='dmenu_bind.sh'
+alias mux='tmux source-file ~/.tmux.conf'
+# }}}
+
+#package management
+alias pacs='sudo pacman -S'
+alias pu='sudo pacman -Syu'
+alias pacr='sudo pacman -R'
+alias yi='yaourt -S'
+alias yr='yaourt -R'
+#alias yu='yaourt -Syy && yaourt -Syua --devel'
+alias yu='yaourt -Syua && yaourt -Syua --devel'
+# }}}
+
+#music
+alias mpd='mpd;sudo mpdscribble'
+alias mps='sudo mpdscribble'
+alias ncp='ncmpcpp'
+# }}}
+
+#scriptz
+alias hack='pretendtobebusy-hacking'
+alias install-pretend='pretendtobebusy-installer'
+alias sfd='screenfetch-dev'
+alias sfu='screenfetch-ulf'
+alias sfv='screenfetch-vosh'
+
+# cd and ls in one
+cl() {
+    dir=$1
+    if [[ -z "$dir" ]]; then
+        dir=$HOME
+    fi
+    if [[ -d "$dir" ]]; then
+        cd "$dir"
+        ls
+    else
+        echo "bash: cl: '$dir': Directory not found"
+    fi
+}
+# }}}
+
+# Colours
+# Reset
+txtblk='\[\e[0;30m\]' # Black - Regular
+txtred='\[\e[0;31m\]' # Red
+txtgrn='\[\e[0;32m\]' # Green
+txtylw='\[\e[0;33m\]' # Yellow
+txtblu='\[\e[0;34m\]' # Blue
+txtpur='\[\e[0;35m\]' # Purple
+txtcyn='\[\e[0;36m\]' # Cyan
+txtwht='\[\e[0;37m\]' # White
+txtrst='\[\e[0m\]'    # Reset
+
+fcolor=${txtblu}      # Frame Color
+hcolor=${txtpur}      # Host Color
+
+# }}}
+
+#Prompt customization
+#PS1='[\u@\h \W]\$ '  # To leave the default one
+#DO NOT USE RAW ESCAPES, USE TPUT
+reset=$(tput sgr0)
+red=$(tput setaf 1)
+blue=$(tput setaf 4)
+white=$(tput setaf 8)
+
+PROMPT_COMMAND='if [ `pwd|wc -m` -gt 60 ]; then
+                   dir=`basename "$PWD"`
+                   dirname=`echo "../${dir}"`
+                else
+                   dirname=`echo "$PWD"`
+                fi'
+
+if [ `id -u` -ne 0 ]; then
+   ucolor=${txtylw}
+   pointer='>'
+else
+   ucolor=${txtgrn}
+   pointer='#'
+fi
+
+PS1="\[\e[0;33m\]» [\e[0;31m\]\W\[\e[0;33m\]]\[\e[1;32m\]:\[\e[0m\] "
+#PS1="${fcolor}┌${fcolor}${txtwht}\${dirname}${fcolor}
+#${fcolor}└─${ucolor}${pointer} ${txtcyn}"
+#PS1="${fcolor}┌[${ucolor}\u${txtwht}@${hcolor}\h${fcolor}]${hcolor}─${fcolor}[${txtwht}\${dirname}${fcolor}]
+#${fcolor}└─${ucolor}${pointer} ${txtcyn}"
+#PS1='\[$red\]\u\[$reset\] \[$blue\]\w\[$reset\] \[$red\]\$ \[$reset\]\[$white\] '
+#PS1='\[\e[0;34m\]\u\[\e[m\] \[\e[1;33m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[0;97m\]'
+# }}}
+
+#Other shit
+export MAIL=$HOME/Mail/INBOX
+export EDITOR=vim
+alias vi='vim'
+PATH="${PATH}:/home/shit-twins/bin"
+# }}}
+source todo_completion
+complete -F _todo t

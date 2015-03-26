@@ -1,0 +1,24 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+update_interval 1.0
+update_interval_on_battery 10.0
+total_run_times 0
+short_units yes
+if_up_strictness address
+use_spacer left
+override_utf8_locale yes
+cpu_avg_samples 1
+double_buffer yes
+TEXT
+^bg(\#FFFFFF)^fg(\#FF6666)  ^ca(1,urxvt -e fdm -kv fetch)^i(/home/shit-twins/dzen/icons/mail.xbm)^ca() ^fg(\#50443b)${exec sh mail.sh}  \
+${if_existing /proc/net/route wlo1}\
+^fg(\#FF6666)^i(/home/shit-twins/dzen/icons/wifi_02.xbm) ^fg(\#50443b)${wireless_essid wlo1}${else}  \
+^fg(\#FF6666)^i(/home/shit-twins/dzen/icons/notify.xbm) ^fg(\#50443b)none ${endif}  \
+^ca(1,battery.sh)^fg(\#FF6666)^i(/home/shit-twins/dzen/icons/batt4full.xbm) ^fg(\#50443b)${exec sh batt.sh} ^ca()  \
+^ca(1,urxvt -e alsamixer -g)^fg(\#FF6666)^i(/home/shit-twins/dzen/icons/volume_on.xbm) ^fg(\#50443b)${mpd_vol}% ^ca()  \
+^ca(1,dzen_popup_toggle.sh mpd)^fg(\#FF6666)^i(/home/shit-twins/dzen/icons/phones.xbm) ^fg(\#50443b)${exec sh artist.sh}${exec sh func_mpc.sh}^ca() \
+^bg(\#FF6666)^fg(\#FFFFFF)   ^i(/home/shit-twins/dzen/icons/info_02.xbm) ${execpi 600 getweather -i -f "%tC"}^fg()  \
+^ca(1,dzen_popup_toggle.sh calendar)^i(/home/shit-twins/dzen/icons/clock1.xbm)^ca()  ${time %a, %d %b | %H:%M} \

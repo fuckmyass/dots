@@ -1,0 +1,36 @@
+double_buffer yes
+background no
+own_window yes
+#own_window_class desktop
+own_window_transparent no
+#own_window_type dock
+own_window_type desktop
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+#own_window_argb_visual yes
+#own_window_argb_value 210
+draw_outline no
+draw_borders no
+draw_graph_borders no
+draw_shades no
+gap_y 563
+gap_x 35
+alignment top_left
+update_interval 0.5
+own_window_colour 252525
+use_xft yes
+xftfont M+ 1m:bold:pixelsize=11
+use_spacer none 
+minimum_size  175 175
+maximum_width 175
+#border_inner_margin 15
+uppercase yes
+override_utf8_locale yes
+imlib_cache_size 100
+
+TEXT
+${image /tmp/cover.jpg -p 0,0 -s 175x175}${exec ~/bin/albumart.sh}
+${voffset -5}
+#${goto 150}${color #130F1C}$mpd_artist
+#${goto 150}$mpd_title
+#${goto 150}$mpd_album
+#${goto 150}${mpd_bar 3,65}

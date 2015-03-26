@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# ~/.xinitrc
+#
+# Executed by startx (run your window manager from here)
+
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+# fonts
+xset +fp /usr/share/fonts/local
+xset +fp /usr/share/fonts/adobe-source-sans-pro
+xset +fp /usr/share/fonts/artwiz-fonts
+xset +fp /usr/share/fonts/envypn
+xset +fp /usr/share/fonts/ippytrax
+xset +fp /usr/share/fonts/modd
+xset +fp /usr/share/fonts/uushi
+xset +fp /usr/share/fonts/creep
+xset +fp /usr/share/fonts/lemon
+xset +fp /usr/share/fonts/PragmataPro
+xset +fp /usr/share/fonts/peep
+xset +fp /usr/share/fonts/inconsolata-dz for Powerline
+xset +fp /usr/share/fonts/fantasque-sans-mono
+xset +fp /usr/share/fonts/Menlo-for-Powerline
+xset fp rehash
+
+# set the cursor
+xsetroot -cursor_name left_ptr &
+
+urxvtd -q -f -o &
+
+# feh background
+sh ~/.fehbg &
+
+# compton -b -C &
+#compton -bCG &
+# compton -f -D8 -I0.05 -O0.05 &
+
+mpd &
+
+mpdscribble &
+
+# Load X resources
+xrdb -load ~/.Xresources
+
+# exec redshift &
+
+exec conky -c ~/.conkyrc &
+
+while :; do battery_check; sleep 120; done &
+
+# Start a terminal in the background. If it dies, X still lives.
+exec urxvtc &
+
+# Start window manager in the foreground. If this dies, X dies.
+# 2bwm
+sxhkd &
+exec bspwm

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+FONT="-*-m+ 1m bold-*-r-*-*-12-*-*-*-*-*-iso10646-1"
+PAD='  '
+ACT='onstart=uncollapse;button1=exit;button3=exit'
+YPOS='40'
+XPOS='900'
+TIME='2'
+
+# Colors
+FG="#50443b"
+BG="#FFFFFF"
+
+OPTIONS="-bg ${BG} -fg ${FG} -y ${YPOS} -e ${ACT} -ta 'c'"
