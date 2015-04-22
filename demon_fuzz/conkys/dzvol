@@ -1,0 +1,19 @@
+#! /bin/bash
+
+font="-*-profont-*-*-*-*-10-*-*-*-*-*-*-*"
+background="#14101C"
+foreground="#ad6a72"
+dullfg="#4b464f"
+exit="onstart=uncollapse;button1=exit;button3=exit"
+
+dzen="dzen2 -x 1121 -y 575 -w 240 -h 35 -fn $font -bg $background -fg $foreground -ta left -p -e $exit"
+gdbar="gdbar -w 180 -h 2 -fg $foreground -bg $dullfg"
+
+#vol=$(amixer get Master | egrep -o "[0-9]+%" | head -1 | cut -d '%' -f1)
+
+while true; do
+  amixer get Master | egrep -o "[0-9]+%" | head -1 | cut -d '%' -f1 | $gdbar -l '   ^fg(\#AAA5AD)^i(/home/shit-twins/dzen/icons/vol2.xbm)   ' | $dzen
+  sleep 1
+done
+
+#--------

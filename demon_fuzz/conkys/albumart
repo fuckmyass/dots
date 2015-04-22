@@ -1,0 +1,26 @@
+alignment top_right
+double_buffer yes
+background no
+own_window yes
+own_window_transparent no
+own_window_type desktop
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+draw_outline no
+draw_borders no
+draw_graph_borders no
+own_window_colour 14101C
+draw_shades no
+gap_y 330
+gap_x 10
+update_interval 3.0
+use_xft yes
+xftfont M+ 1m:bold:pixelsize=11
+use_spacer none 
+minimum_size  230 230
+maximum_width 230
+uppercase yes
+override_utf8_locale yes
+imlib_cache_size 100
+
+TEXT
+${image /tmp/cover.jpg -s 230x230}${exec ~/bin/albumart.sh}

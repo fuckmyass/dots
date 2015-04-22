@@ -1,0 +1,26 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+update_interval 1.0
+update_interval_on_battery 10.0
+total_run_times 0
+short_units yes
+if_up_strictness address
+use_spacer left
+override_utf8_locale yes
+cpu_avg_samples 1
+double_buffer yes
+minimum_size 229 80
+
+TEXT
+^bg(\#14101C)^fg(\#ad6a72)  ${if_existing /proc/net/route wlo1} ^fg(\#ad6a72)^i(/home/shit-twins/dzen/icons/wifi_02.xbm) ^fg(\#AAA5AD)${wireless_essid wlo1}${else}  ^fg(\#ad6a72)^i(/home/shit-twins/dzen/icons/notify.xbm) ^fg(\#AAA5AD)none ${endif}  \
+${if_match "${acpiacadapter ACAD}" == "charging"}\
+^fg(\#d99395)  ^i(/home/shit-twins/dzen/icons/ac1.xbm)^fg() ${else}\
+${if_match ${battery_percent BAT0} <= 30}\
+^fg(\#C0392B)  ^i(/home/shit-twins/dzen/icons/batt4empty.xbm)^fg() ${else}\
+${if_match ${battery_percent BAT0} <= 65}\
+^fg(\#f39c12)  ^i(/home/shit-twins/dzen/icons/batt4half.xbm)^fg() ${else}\
+^fg(\#2ecc71)  ^i(/home/shit-twins/dzen/icons/batt4full.xbm)^fg() ${endif}${endif}\
+${endif} ^fg(\#AAA5AD)${exec sh batt.sh}   \

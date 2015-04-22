@@ -1,0 +1,55 @@
+######################
+# - Conky settings - #
+######################
+update_interval 1
+total_run_times 0
+net_avg_samples 1
+cpu_avg_samples 1
+
+imlib_cache_size 0
+double_buffer yes
+no_buffers yes
+
+#####################
+# - Text settings - #
+#####################
+use_xft yes
+xftfont m+ 1c bold:size=15
+override_utf8_locale yes
+text_buffer_size 2048
+xftalpha 0.9
+
+#############################
+# - Window specifications - #
+#############################
+alignment top_right
+background no
+own_window yes
+own_window_transparent no
+own_window_type desktop
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+
+alignment tr
+gap_x 10
+gap_y 45
+minimum_size 229 40
+
+default_bar_size 40 5
+
+#########################
+# - Graphics settings - #
+#########################
+draw_shades no
+
+own_window_colour 14101C
+color0 AAA5AD
+color1 ad6a72
+color2 d99395
+
+TEXT
+${color1}${voffset -6}${color1}${font m+ 1c bold:size=8}${alignr 8}${time %p}
+${color2}${voffset -6}${font}${alignr 5}${time %I}:${time %M}
+${color1}${voffset -6}${hr}
+${voffset -6}${alignr -42}${font m+ 1c bold:size=8}${time %A}
+${color2}${font m+ 1c:bold:size=15}${voffset -6}${alignr 4}${time %d}$font
+${color1}${voffset -14}${alignr -17}${font m+ 1c bold:size=8}${time  %B}

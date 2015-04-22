@@ -1,0 +1,50 @@
+# Conky by Qaisar Nawaz
+# Conky settings #
+background no
+update_interval 1
+double_buffer yes
+
+# Window specifications #
+own_window yes
+own_window_type normal
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_title 
+own_window_colour 14101C
+own_window_argb_visual no
+#own_window_argb_value 210
+
+minimum_size 234 40
+maximum_width 234
+
+# Alignment #
+alignment tr
+gap_x 8
+gap_y 660
+
+border_inner_margin 0
+border_outer_margin 0
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+xftalpha 0
+xftfont m+ 1c bold:size=10
+
+override_utf8_locale yes
+
+imlib_cache_size 0
+
+# Color scheme #
+default_color AAA5AD
+color1 ad6a72
+
+TEXT
+${execi 900 curl -s "http://weather.yahooapis.com/forecastrss?w=44614&u=c" -o ~/.cache/weather.xml}${execi 900 cp -f ~/conkys/conky_icons/$(grep "yweather:condition" ~/.cache/weather.xml | grep -o "code=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*").png ~/.cache/weather.png}${image ~/.cache/weather.png -p -1,-1 -s 103x103}${font}
+${voffset -8}${alignr 4}${execi 300 grep "yweather:condition" ~/.cache/weather.xml | grep -o "text=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*" | tr '[a-z]' '[A-Z]'}
+${font m+ 1c:bold:size=10}${alignr 2}${execi 900 grep "yweather:condition" ~/.cache/weather.xml | grep -o "temp=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}${font} °C
+${voffset 35}${alignr 4}${execi 900 grep "yweather:location" ~/.cache/weather.xml | grep -o "city=\"[^\"]*\"" | grep -o "\"[^\"]*\"" | grep -o "[^\"]*"}
