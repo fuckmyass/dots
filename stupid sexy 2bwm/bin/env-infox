@@ -1,0 +1,215 @@
+#!/bin/bash
+
+# simple screen information script -- EXPERIMENTAL VERSION
+# similar to archey and screenfetch without annoying ASCII graphics
+# this EXPERIMENTAL version prints a little more sys info than the original script
+
+# this script is provided with NO GUARANTEE and NO SUPPORT
+# if it breaks or does not do what you want, FIX IT YOURSELF
+
+# this EXPERIMENTAL version is likely to be even more unstable than the original
+# if something does not work, don't whine about it -- just fix it and share your result
+
+# takes two arguments:
+# '-f' to print even more useless sys info
+# '-v' to print the version and build date and then exit
+# you can only specify one argument or the other (a second argument will be ignored, and the args cannot be combined)
+# if you don't like this, TOO BAD --  if you really don't like it, change the script yourself
+# i don't like args to begin with, and i'm not modifying my script for your stupid edge case
+
+VERSION="1.5"
+
+# wm array -- add any that need to be recognized
+wms=( 2bwm 2wm 9wm aewm afterstep ahwm alopex amiwm antiwm awesome blackbox bspwm catwm clfswm ctwm cwm dminiwm dragonflywm dwm echinus \
+    euclid-wm evilpoison evilwm fluxbox flwm fvwm-crystal goomwwm hcwm herbstluftwm i3 icewm jwm karmen larswm lwm matwm2 mcwm monsterwm \
+    musca notion nwm olwm openbox oroborus pekwm ratpoison sapphire sawfish sscrotwm sithwm smallwm snapwm spectrwm stumpwm subtle tfwm tinywm tritium twm \
+    uwm vtwm w9wm weewm wind windowlab wm2 wmaker wmfs wmii wmx xfwm4 xmonad xoat yeahwm )
+
+# define colors for color-echo
+red="\e[31m"
+grn="\e[32m"
+ylw="\e[33m"
+cyn="\e[36m"
+blu="\e[34m"
+prp="\e[35m"
+rst="\e[0m"
+
+[[ $1 = '-v' ]] && {    # print version and modify date, then exit
+    echo $(basename $0) v$VERSION / wm count: ${#wms[*]} / last modified: $(date -r "$0" +"%F %H:%M") 
+    exit
+}
+
+[[ $1 = '-f' ]] && FULL=1
+
+color-echo() {  # print with colors
+    echo -e $cyn$1': '$rst$2
+}
+
+print-kernel() {
+    color-echo 'Kernel' "$(uname -smr)"
+}
+
+print-uptime() {
+    up=$(</proc/uptime)
+    up=${up//.*}                # string before first . is seconds
+    days=$(($up/86400))       # seconds divided by 86400 is days
+    hours=$(($up/3600%24))    # seconds divided by 3600 mod 24 is hours
+    mins=$(($up/60%60))       # seconds divided by 60 mod 60 is mins
+    color-echo "Uptime" "$days"'d '"$hours"'h '"$mins"'m'
+}
+
+print-shell() {
+    color-echo 'Shell' $SHELL
+}
+
+print-pkgcount() {
+    count=0
+    if [[ $(which prt-get 2>/dev/null) != "" ]]; then     # CRUX
+        count=$(prt-get listinst 2>/dev/null | wc -l)
+    elif [[ $(which dpkg 2>/dev/null) != "" ]]; then 	  # Debian
+        count=$(dpkg -l 2>/dev/null | grep ^ii | wc -l)
+    elif [[ $(which pacman 2> /dev/null) != "" ]]; then   # Arch
+        count=$(pacman -Q 2>/dev/null | wc -l)
+    fi
+    [[ $count != 0 ]] && color-echo Packages $count 	# if $count is still zero i have no clue
+}
+
+print-cpu() {
+    arm=$(grep ARM /proc/cpuinfo)    # ARM procinfo uses different format
+    if [[ "$arm" != "" ]]; then
+        cpu=$(grep -m1 -i 'Processor' /proc/cpuinfo)
+    else
+        cpu=$(grep -m1 -i 'model name' /proc/cpuinfo)
+    fi
+    if [[ $FULL ]]; then
+	cores=$(lscpu | awk '/^CPU\(s\)/ {print $2}')
+        extra="$cyn Cores: $rst$cores"
+    fi
+    color-echo 'CPU' "${cpu#*: }$extra" # everything after colon is processor name
+}
+
+print-disk() {
+    # field 2 on line 2 is total, field 3 on line 2 is used
+    disk=$(df -h / | awk 'NR==2 {total=$2; used=$3; print used" / "total}')
+    color-echo 'Disk' "$disk"
+}
+
+print-mem() {
+    # field 2 on line 2 is total, field 3 on line 2 is used (in new format)
+    # field 2 on line 2 is total, field 3 on line 3 is used (in old format)
+    # use -m because slackware does not have -h
+
+    if [[ $(free -m) =~ "buffers" ]]; then # using old format
+	    mem=$(free -m | awk 'NR==2 {total=$2} NR==3 {used=$3; print used"M / "total"M"}')
+        swap=$(free -m | awk 'NR==4 {print $2"M"}')
+    else # using new format
+	    mem=$(free -m | awk 'NR==2 {total=$2} NR==2 {used=$3; print used"M / "total"M"}')
+        swap=$(free -m | awk 'NR==3 {print $2"M"}')
+    fi
+    [[ $FULL && $swap != "" ]] && extra="$cyn Swap: $rst$swap"
+    color-echo 'Mem' "$mem$extra"
+}
+
+print-wm() {
+    for wm in ${wms[@]}; do             # pgrep through wmname array
+        pid=$(pgrep -x -u $USER $wm)    # if found, this wmname has running process
+        if [[ "$pid" ]]; then
+            color-echo 'WM' $wm
+            break
+        fi
+    done
+}
+
+print-de() {
+    if [[ $(pgrep -u $USER lxsession) ]]; then         # if lxsession is running, assume LXDE
+        color-echo 'DE' 'LXDE'
+    elif [[ $(pgrep -u $USER xfce4-session) ]]; then   # if xfce4-session is running, assume Xfce
+        color-echo 'DE' 'Xfce'
+    fi
+}
+
+print-distro() {
+    [[ -e /etc/os-release ]] && source /etc/os-release
+    if [[ -n "$PRETTY_NAME" ]]; then
+        color-echo 'OS' "$PRETTY_NAME"
+    else
+        color-echo 'OS' "not found"
+    fi
+}
+
+print-font() {
+    fontstr=$(xrdb -query 2>/dev/null | grep '*font')
+    if [[ $fontstr =~ xft ]]; then # using an xft font
+        d=':'
+    else # using bitmap font
+        d='-'
+    fi
+    font=$(echo $fontstr | awk -F$d '{ print $3 }')
+    [[ $font != "" ]] && color-echo "Font" "$font"
+}
+
+print-term() {
+    termname=$(xrdb -query 2>/dev/null | awk -F: '/termName/ {sub(/\t/, ""); print $2}')
+    if [[ $termname != "" ]]; then
+        color-echo 'Term' "$termname"
+    else 
+        [[ -n $TERM ]] && color-echo 'Term' "$TERM"
+    fi
+}
+
+print-colors() {
+    NAMES=('black' 'red' 'green' 'yellow' 'blue' 'magenta' 'cyan' 'white')
+    for f in $(seq 0 7); do
+        echo -en "\033[m\033[$(($f+30))m ${NAMES[$f]} " # normal colors
+    done
+    echo
+    for f in $(seq 0 7); do
+        echo -en "\033[m\033[1;$(($f+30))m ${NAMES[$f]} " # bold colors
+    done
+    echo -e "$rst\n"
+}
+
+print-resolution() {
+    res=$(xdpyinfo 2>/dev/null | awk '/dimensions:/ {print $2}')
+    [[ ! -z $res ]] && color-echo "Resolution" "$res"
+}
+
+print-netcard() {
+    card=$(lspci -m | awk -F \" '/Ethernet/ {print $4, $6}')
+    color-echo "Ethernet" "$card"
+}
+
+print-graphics() {
+    card=$(lspci -m | awk -F \" '/VGA/ {print $4, $6; exit}')
+    color-echo "Graphics" "$card"
+}
+
+print-audio() {
+    card=$(lspci -m | awk -F \" '/audio|Audio/ {print $4, $6}')
+    color-echo "Audio" "$card"
+}
+
+echo -e '\n'$prp$USER'@'$HOSTNAME$rst'\n'   # print user and host name
+print-distro
+print-uptime
+print-shell
+print-de
+print-wm
+#print-term
+print-font
+print-pkgcount
+[[ $FULL ]] && print-resolution
+print-disk
+print-mem
+color-echo "Time" "$(date +'%l:%M %p : %e %b %Y')"
+print-kernel
+print-cpu
+if [[ $FULL ]]; then
+    print-netcard
+    print-graphics
+    print-audio
+fi
+echo
+print-colors
+
+

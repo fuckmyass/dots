@@ -1,0 +1,35 @@
+urxvt*saveLines: 3000
+urxvt*font: xft:pragmatapro for powerline:size=8,xft:meguri:pixelsize=8
+urxvt*boldFont: xft:pragmatapro for powerline:size=8,xft:meguri:pixelsize=8
+urxvt*letterSpace: -1
+
+URxvt.depth: 24
+urxvt*scrollstyle: plain
+urxvt*scrollBar: false
+urxvt*scrollBar_floating: true
+urxvt*scrollBar_right: true
+urxvt*geometry: 73x23
+
+Xft*dpi: 96
+Xft*antialias: true
+Xtf*hinting: full
+urxvt*cursorBlink: true
+
+urxvt*perl-ext-common:	default,clipboard
+urxvt*urlLauncher:      firefox
+urxvt*matcher.button:	1
+urxvt*url-select.underline: 	true
+
+urxvt*internalBorder:		4
+urxvt*borderColor: #1d1f21
+!urxvt*cursorColor: #ad6a72
+URxvt*cursorUnderline: true
+
+urxvt*highlightColor: #232323
+urxvt*highlightTextColor: #586479
+
+urxvt*termName: rxvt-256color
+
+!colorscheme
+
+#include "/home/shit-twins/colourschemes/gaseG"

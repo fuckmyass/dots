@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# This script requires xdotool for the clickable workspace switcher
+
+# Variables
+lt="^i($HOME/dzen/icons/left_triangle.xbm)"
+rt="^i($HOME/dzen/icons/right_triangle.xbm)"
+lwst="^i($HOME/dzen/icons/left_workspace_triangle.xbm)"
+tbg="^bg(#1d1f21)"
+tfg="^fg(#1d1f21)"
+circle="^i($HOME/dzen/icons/circle.xbm)"
+bug="^i($HOME/dzen/icons/bug.xbm)"
+cbg="^bg(#1d1f21)"
+cfg="^fg(#81a2be)"
+cfgbug="^fg(#cc6666)"
+ctbg="^bg(#1d1f21)"
+ctfg="^fg(#1d1f21)"
+workspaces=5 # Choose how many workspaces you want to use. (0=1, 1=2 etc)
+
+# Loop output to the panel
+while :
+do
+
+clock=`date +"%a %d %b %H:%M"`
+
+# Save our output into a variable to pipe it to the panel
+for ((i=0;i<=$workspaces;i++))
+do
+	cws=`xprop -root _NET_CURRENT_DESKTOP | awk '{print $3}'`
+	
+	if [ $cws -eq $i ]; then
+		ws=$ws$cbg$cfgbug$bug
+	else	
+		#ws=$ws$cbg$cfg$circle2
+		ws="$ws^ca(1, xdotool key Super+$(($i + 1)))$cbg$cfg$circle^ca()"
+	fi
+done
+
+# Send the output
+echo "$ws$tbg$tfg$lwst"
+
+# Reset variables and arrays
+ws=""
+
+# Sleep for 0.3s before we start over
+sleep 0.3
+
+done
