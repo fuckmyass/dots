@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# notify - Display notifications using bar
+# onodera, https://github.com/onodera-punpun
+
+## CONFIGURATION
+
+# Set colors
+bg=1D1F21
+fg=CB6077
+
+# Set font
+font=wenquanyizenheimono-9
+
+# Set font width
+fontwidth=6
+
+
+## EXECUTE
+
+if [[ "$#" -ge 1 ]]; then
+	case "$@" in
+		-h|--help)
+			echo "usage: notify [options] [message]"
+			echo "options:"
+			echo "  -v,   --version             print version and exit"
+			echo "  -h,   --help                print help and exit"
+			exit 0
+			;;
+		-v|--version)
+			echo "notify 0.4"
+			exit 0
+			;;
+		*)
+			# Calculate width & position of bar
+			width="$(($(echo "  $@  " | wc -m) * fontwidth))"
+			left="$((180 - width))"
+
+			# Kill old notifycation
+			pkill -f -n "FFEEEEE"
+
+			# Display notifcation
+			(echo "%{c}$@" ; sleep 4) |
+			lemonbar -g ${width}x46+40+680 -d -f $font -B \#FF$bg -F \#FF$fg & disown
+			;;
+	esac
+else
+	echo "Please specify a message."
+	exit 1
+fi

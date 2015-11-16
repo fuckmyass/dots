@@ -1,0 +1,44 @@
+urxvt*saveLines: 3000
+!urxvt*font: xft:pragmatapro:size=8,xft:meguri:pixelsize=8
+!urxvt*boldFont: xft:pragmatapro:size=8,xft:meguri:pixelsize=8
+!urxvt*font: xft:hack:size=8,xft:Sazanami Gothic,さざなみゴシック:pixelsize=8,xft:Baekmuk Gulim:pixelsize=8:style=Bold
+!urxvt*font: xft:source han sans jp:size=8:style=Bold
+!urxvt*font: xft:sfns display:size=9,xft:wenquanyi zen hei mono:size=9:style=Bold
+urxvt*font: xft:fira mono for powerline:size=9,xft:wenquanyi zen hei mono:size=9:style=Bold
+!urxvt*boldFont: xft:mensch:size=8,xft:Sazanami Gothic,さざなみゴシック:pixelsize=8
+urxvt*letterSpace: -2
+
+dzen2.font: -*-neep-*-*-*-*-*-*-*-*-*-*-*-*
+dzen2.background: black
+
+URxvt.depth: 24
+urxvt*scrollstyle: plain
+urxvt*scrollBar: false
+urxvt*scrollBar_floating: true
+urxvt*scrollBar_right: true
+urxvt*geometry: 75x12
+
+Xft*dpi: 96
+Xft*antialias: true
+Xtf*hinting: full
+urxvt*cursorBlink: true
+
+urxvt*perl-ext-common:	default,clipboard
+urxvt*urlLauncher:      firefox
+urxvt*matcher.button:	1
+urxvt*url-select.underline: 	true
+
+urxvt*internalBorder:		23
+urxvt*borderColor: #E0E0E0
+!urxvt*borderColor: #2E3A38
+urxvt*cursorColor:     #434E56
+URxvt*cursorUnderline: true
+
+!urxvt*highlightColor: #232323
+!urxvt*highlightTextColor: #586479
+
+urxvt*termName: rxvt-256color
+
+!colorscheme
+
+#include "/home/shit-twins/colourschemes/yosemite"

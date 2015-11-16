@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# onodera - onodera at openmailbox dot org
+# A script that takes a scrot and display a notification
+
+# TODO: Add feedback like punf
+
+## CONFIGURATION
+
+# Set location where the scrots get saves
+scrotdir="$HOME/pix"
+
+## EXECUTE
+
+if [[ "$#" -eq 1 ]]; then
+	case "$1" in
+		-h|--help)
+			echo "-s         take selection scrot"
+			echo "           take fullscreen scrot"
+			;;
+		-s)
+			# Take selection scrot
+			maim --hidecursor -s -b 3 -c 250,250,250 "$scrotdir/scrot$(ls "$scrotdir" | wc -l).png"
+			notify "Scrotted selection" & disown
+			;;
+		*)
+			echo "Invalid option, use -h for help."
+			;;
+	esac
+else
+	# Take fullscreen scrot
+	maim --hidecursor "$scrotdir/scrot$(ls "$scrotdir" | wc -l).png"
+	notify "Screenshot taken" & disown
+fi

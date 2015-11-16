@@ -1,0 +1,20 @@
+bg="#f2f2f2"
+fg="#1f2226"
+font="sfnsdisplay-10;wenquanyizenheimono-10"
+icon="/home/shit-twins/dzen/icons"
+
+DZEN="dzen2 -p -h 30 -w 900 -x 470 -y 0 -e 'button3=' -ta c -bg $bg -fn $font -fg $fg"
+
+clock() {
+	date=$(date +"%a, %d %b |")
+	time=$(date +"%a %l:%M %p")
+	echo -n "$time"
+	return
+}
+
+while :; do echo " ^i("$icon/music_icon.xbm") ^fn(wenquanyizenheimono-9)$(mpc current) \
+^fn(sfnsdisplay-10)^pa(635)^r(0) ^ca(1, urxvt -e alsamixer -g)^i("$icon/vol2.xbm") $(sh dzen-vol.sh)^ca() \
+   ^i("$icon/wireless8.xbm") $(sh dzen-wifi.sh) \
+   $(sh dzen-batt.sh) \
+   $(clock) "
+done | $DZEN

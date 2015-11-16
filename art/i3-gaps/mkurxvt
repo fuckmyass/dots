@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# onodera - onodera at openmailbox dot org
+# Draw urxvt terms using slop
+
+eval "$(slop -b 3 -c 250,250,250 -t 0)"
+
+fixedW=$(( (W - 40) / 8))
+fixedH=$(( (H - 40) / 14)) 
+
+if ! [[ "$G" =~ 1x1 ]]; then
+	urxvtc -g ${fixedW}x${fixedH}+$X+$Y & disown
+fi

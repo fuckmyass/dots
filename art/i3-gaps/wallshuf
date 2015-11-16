@@ -1,0 +1,23 @@
+#!/bin/fish
+#
+# onodera - onodera at openmailbox dot org
+# Chooses a random wallpaper from ~/.wallpapers
+
+## CONFIGURATION
+
+# Set wallpaper dir location
+set wallpaperdir $HOME/pix/wallpapers/Art
+
+# Set colors
+set fg normal
+set c1 yellow
+
+## EXECUTE
+
+# Get random wallpaper
+set wallpaper (ls $wallpaperdir | shuf -n 1)
+
+# Set random wallpaper
+hsetroot -fill $wallpaperdir/$wallpaper -blur 1 -gamma 1 -tint "#F3D5C9"
+#hsetroot -fill $wallpaperdir/$wallpaper -blur 2 -gamma 1
+echo "Wallpaper set, "(set_color $c1)"$wallpaper"(set_color $fg)"."
