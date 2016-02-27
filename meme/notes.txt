@@ -1,0 +1,6 @@
+GTK: Win3x Black Leather Jacket
+GTK Font: MS Gothic 9
+Icon Theme: Classic95
+Sublime Theme: iPlastic / Spacegrey Light
+Sublime Font: Bitstream Vera Sans Mono 8
+Firefox Font: Aquabase

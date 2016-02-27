@@ -1,0 +1,39 @@
+#!/bin/fish
+#
+# notify - Display notifications using bar
+# onodera, https://github.com/onodera-punpun
+
+## CONFIGURATION
+
+# Set colors
+set bg F99595
+set fg 32302F
+
+# Set font
+set font msgothic-10
+
+## EXECUTE
+
+if test (count $argv) -ge 1
+	switch $argv[1]
+		case -h --help
+			echo -e "Usage: notify [options] [message]\n"
+			echo "options:"
+			echo "  -h,   --help                print help and exit"
+			exit 0
+		case "*"
+			# Kill old notification
+			pkill -f "lemonbar -g 800x56"
+
+			# Display notification
+			echo "%{B#$bg}%{r}     $argv     " | lemonbar -g 940x25+400+243 -d -p -f $font -B \#00$bg -F \#$fg &
+
+			# Kill notification
+			sleep 4
+			set pid (jobs -p | cut -d \n -f 2)
+			kill $pid ^ /dev/null
+		end
+else
+	echo "Please specify a message."
+	exit 1
+end

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# BATTERY ICONS:
+#       
+
+WHITE="#c5c8c6"
+RED="#CC8989"
+YELLOW="#CCAA88"
+GREEN="#70A68B"
+
+BAT=`acpi -b | awk '{gsub(/%,/,""); print $4}' | sed 's/%//g'`
+STATUS=`acpi -b | awk '{gsub(/,/,""); print $3}'`
+
+# Set Icon
+icon=""
+if [[ $STATUS != "Discharging" ]]; then
+	icon="^fg($WHITE)^i(/home/shit-twins/dzen/icons/ac4.xbm)"
+elif [[ $BAT -lt 20 ]]; then
+	icon="^fg($GREEN)^i(/home/shit-twins/dzen/icons/bat_empty_01.xbm)"
+elif [[ $BAT -lt 49 ]]; then
+	icon="^fg($YELLOW)^i(/home/shit-twins/dzen/icons/bat_low_01.xbm)"
+elif [[ $BAT -lt 70 ]]; then
+	icon="^fg($RED)^i(/home/shit-twins/dzen/icons/bat_full_01.xbm)"
+else
+	icon="^fg($GREEN)^i(/home/shit-twins/dzen/icons/bat_full_01.xbm)"
+fi
+
+
+echo "$icon"

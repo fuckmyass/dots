@@ -1,0 +1,38 @@
+URxvt.colorBD: #857672
+URxvt.colorIT: #bbbbbb
+URxvt.cursorBlink: false
+URxvt.cursorColor: #ff8939
+URxvt.cursorColor2: #121212
+
+!SCHEME FROM THE GOD Thayer
+! -- by Thayer -- !
+
+*foreground: #ECE8CF
+!*background: #2D2D2D
+*background: #41474A
+!black
+!*color0:     #393939
+!*color8:     #474747
+*color0:     #010101
+*color8:     #6f817e
+!!red
+*color1:     #EE9379
+*color9:     #FF8D80
+!!green
+*color2:     #E2FFC7
+*color10:    #DBFFB3
+!!yellow
+*color3:     #FFFFB9
+*color11:    #FFBE64
+!!blue
+*color4:     #EDE7B4
+*color12:    #E15848
+!!magenta
+*color5:     #E2BEB5
+*color13:    #94C7B5
+!!cyan
+*color6:     #6EB49D
+*color14:    #A2C3CC
+!!white
+*color7:     #dddddd
+*color15:    #dddddd

@@ -1,0 +1,91 @@
+urxvt*saveLines: 3000
+!urxvt*font: xft:sfns display:size=9,xft:wenquanyi zen hei mono:size=9:style=Bold
+!urxvt*font: xft:fira mono for powerline:size=9,xft:wenquanyi zen hei mono:size=9:style=Bold
+!urxvt*font: xft:tewi:pixelsize=11:antialias=false,xft:JackeyFont::antialias=false,xft:WenQuanYi Zen Hei:antialias=false
+!urxvt*letterSpace: -1
+
+urxvt*font:             xft:screen:pixelsize=11:antialias=false,\
+                        xft:wenquanyi zen hei mono:antialias=false,\
+                        xft:Baekmuk Dotum,\
+                        xft:WenQuanYi Bitmap Song,\
+                        xft:GohuFont:antialias=false,\
+                        xft:WenQuanYi Zen Hei:antialias=false,\
+                        xft:DejaVu Sans Mono:antialias=false
+urxvt*boldFont:         xft:screen:pixelsize=11:antialias=false,\
+                        xft:wenquanyi zen hei mono:antialias=false,\
+                        xft:Baekmuk Dotum,\
+                        xft:WenQuanYi Bitmap Song,\
+                        xft:GohuFont:antialias=false,\
+                        xft:WenQuanYi Zen Hei:antialias=false,\
+                        xft:DejaVu Sans Mono:antialias=false
+urxvt*imFont:           -*-kochi gothic-*-*-*--10-*-*-*-*-*-*-*
+
+dzen2.font: -*-neep-*-*-*-*-*-*-*-*-*-*-*-*
+dzen2.background: black
+
+! URxvt*inheritPixmap: true
+! URxvt*.transparent: false
+! URxvt*.shading: 0 to 99 darkens, 101 to 200 lightens
+! URxvt*.shading: 160
+URxvt.depth: 24
+urxvt*scrollstyle: plain
+urxvt*scrollBar: false
+urxvt*scrollBar_floating: true
+urxvt*scrollBar_right: true
+urxvt*geometry: 65x15
+
+Xft*dpi: 96
+Xft*antialias: true
+Xtf*hinting: full
+urxvt*cursorBlink: true
+
+urxvt*perl-ext-common:	default,clipboard
+urxvt*urlLauncher:      firefox
+urxvt*matcher.button:	1
+urxvt*url-select.underline: 	true
+
+urxvt*internalBorder:		23
+urxvt*borderColor: #41474A
+!urxvt*borderColor: #2E3A38
+!urxvt*cursorColor:     #434E56
+URxvt*cursorUnderline: true
+
+!urxvt*highlightColor: #232323
+!urxvt*highlightTextColor: #586479
+
+urxvt*termName: rxvt-256color
+
+! xscreensaver ---------------------------------------------------------------
+
+xscreensaver.mode: random
+xscreensaver.timeout: 0:10:00
+xscreensaver.cycle: 0:10:00
+xscreensaver.lockTimeout: 0:00:00
+xscreensaver.passwdTimeout: 0:00:30
+xscreensaver.dpmsEnabled: False
+xscreensaver.dpmsQuickoffEnabled: False
+xscreensaver.dpmsStandby: 2:00:00
+xscreensaver.dpmsSuspend: 2:00:00
+xscreensaver.dpmsOff: 4:00:00
+xscreensaver.grabDesktopImages: True
+xscreensaver.grabVideoFrames: False
+xscreensaver.chooseRandomImages: True
+xscreensaver.imageDirectory: ~/pix/wallpapers/TobyHarvard
+xscreensaver.nice: 10
+xscreensaver.memoryLimit: 0
+xscreensaver.lock: False
+xscreensaver.verbose: False
+xscreensaver.timestamp: True
+xscreensaver.fade: True
+xscreensaver.unfade: False
+xscreensaver.fadeSeconds: 0:00:03
+xscreensaver.fadeTicks: 20
+xscreensaver.splash: True
+xscreensaver.splashDuration: 0:00:05
+xscreensaver.visualID: default
+xscreensaver.captureStderr: True
+xscreensaver.ignoreUninstalledPrograms: False
+
+!colorscheme
+
+#include "/home/shit-twins/colourschemes/pumpkin-spice"
