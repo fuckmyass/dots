@@ -1,0 +1,273 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+# Mod keys
+set $mod Mod4
+floating_modifier $mod Mod4
+# User config
+font pango:courier prime code 9
+new_float                        pixel 3
+new_window                       pixel 3
+focus_follows_mouse              yes
+popup_during_fullscreen          smart
+hide_edge_borders                none
+gaps inner                       15
+gaps outer                       10
+smart_borders                    on
+
+set $black      #0d0d0d
+set $blue       #5294e2
+set $darkblue   #343c48
+set $darkred    #32302F
+set $grey       #8E8C8A
+set $pink       #FFAAAA
+set $red        #E75C58
+set $yellow     #FFFF00
+set $white      #FFFFFF
+#set $white      #F2ECE1
+
+# Window colours
+#                       BORDER      BACKGROUND  TEXT   INDICATOR   CHILD_BORDER
+client.focused          $red      $blue       $black $blue          $red
+client.focused_inactive $white        $red        $black $red       $white
+client.unfocused        $white       $red        $black $red        $white
+client.urgent           $black    $darkred    $black $black         $red
+client.placeholder      $white      $white      $white $white       $red
+client.background       $red
+
+new_float none
+
+# start a terminal
+bindsym $mod+Return exec urxvt -e tmux
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec coverspawn.sh
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+a exec dmenu_bind.sh
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+# bindsym $mod+c split h
+
+# split in vertical orientation
+# bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+minus layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+# bindsym $mod+d focus parent
+
+# focus the child container
+# bindsym $mod+s focus child
+
+# set workspace names
+#set $ws1 ""
+#set $ws2 ""
+#set $ws3 ""
+#set $ws4 ""
+#set $ws5 "" 
+#set $ws4 ""
+#set $ws5 ""
+#set $ws1 "数一"
+#set $ws2 "数二"
+#set $ws3 "数三"
+#set $ws4 "数四"
+#set $ws5 "数五"
+#set $ws1 "ichi"
+#set $ws2 "ni"
+#set $ws3 "san"
+#set $ws4 "yon"
+#set $ws5 "go"
+#set $ws1 "Term1"
+#set $ws2 "Web2"
+#set $ws3 "File3"
+#set $ws4 "Doc4"
+#set $ws5 "Game5" 
+set $ws1 "#purge パージ"
+set $ws2 "#omega オメガ"
+set $ws3 "#death 地獄"
+set $ws4 "#wave 周波"
+set $ws5 "#surf サーフ"
+#set $ws1 "#purge"
+#set $ws2 "#omega"
+#set $ws3 "#death"
+#set $ws4 "#wave"
+#set $ws5 "#surf"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Start Applications
+bindsym $mod+Shift+Return exec i3-sensible-terminal -e tmux
+bindsym Print                       exec scrot
+bindsym $mod+g                   exec info-notify
+bindsym $mod+i                   exec notify "Connected to `iw dev wlo1 link | grep SSID | cut -c 8-`";mode "default"
+bindsym $mod+m                   exec notify vol: $(amixer get Master | egrep -o '[0-9]+\%')
+bindsym $mod+n                   exec notify $(date "+%A %d %b - %H:%M")
+bindsym $mod+q                   exec music.sh
+bindsym $mod+x                   exec wallshuf
+bindsym $mod+shift+w             exec power.sh
+
+# Workspace assignment
+assign [class="deadbeef"] $ws1
+assign [class="Firefox"] $ws2
+assign [class='subl'] $ws3
+assign [class='Thunar'] $ws3
+assign [class="Steam"] $ws5
+
+# Multimedia Keys
+# increase volume
+bindsym XF86AudioRaiseVolume exec ~/bin/vol.sh -i
+# decrease volume
+bindsym XF86AudioLowerVolume exec ~/bin/vol.sh -d
+# mute volume
+bindsym XF86AudioMute exec ~/bin/vol.sh -t
+# pause / play / next / previous
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Layouts
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [class="archive manager"] floating enable
+for_window [class="Urxvt"] floating enable
+for_window [class="Steam"] floating enable
+for_window [class="Feh"] floating enable
+for_window [class="File-roller"] floating enable
+
+set $mode_resize <span>        </span><span background=$black foreground='#F2EcE1'> resize </span> <span foreground='#F2ECE1'>l</span>eft <span foreground='#F2ECE1'>r</span>ight <span foreground='#F2ECE1'>u</span>p <span foreground='#F2ECE1'>d</span>own
+bindsym $mod+r mode "$mode_resize"
+mode --pango_markup "$mode_resize" {
+    bindsym Left resize shrink width 10 px or 1 ppt
+    bindsym Down resize grow height 10 px or 1 ppt
+    bindsym Up resize shrink height 10 px or 1 ppt
+    bindsym Right resize grow width 10 px or 1 ppt
+
+    bindsym Shift+Left resize shrink width 20 px or 5 ppt
+    bindsym Shift+Down resize grow height 20 px or 5 ppt
+    bindsym Shift+Up resize shrink height 20 px or 5 ppt
+    bindsym Shift+Right resize grow width 20 px or 5 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# fix graphics glitch
+#new_window none
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_role="bash"] floating enable
+for_window [window_role="urxvt"] floating enable
+for_window [window_role="feh"] floating enable
+
+for_window [window_type="feh"] floating enable
+for_window [window_type="urxvt"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_type="bash"] floating enable
+
+# Start i3bar
+#bar {
+#    status_command yabar
+#    font pango:WenQuanYi Zen Hei mono 8
+#    tray_output primary
+#        position top
+#    height 25
+#colors {
+#        background $white
+#        statusline $white
+#        separator $white
+#                            #border     #BG       #TEXT
+#        focused_workspace   $white      $darkblue $white
+#        active_workspace    $white      $white    $black
+#        inactive_workspace  $white      $white    $black
+#        urgent_workspace    $white      $white    #CB6077
+#    }
+#}
+
+#bar {
+#    i3bar_command yabar
+#}
+
+# Shutdown
+# set $mode_power <span>        </span><span background='#E4E4E4' foreground='#000000'> POWER </span> <span foreground='#004DA6'>Lock•</span> <span foreground='#004DA6'>Off•</span> <span foreground='#004DA6'>Reboot•</span> <span foreground='#004DA6'>Poweroff</span>
+mode --pango_markup "$mode_power" {
+    bindsym l exec i3lock-wrapper; mode "default"
+    bindsym o exec i3-msg exit; mode "default"
+    bindsym r exec systemctl reboot; mode "default"
+    bindsym p exec systemctl poweroff; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+#bindsym $mod+shift+w mode "$mode_power"
+
+# EXEC 
+# exec --no-startup-id conky -c ~/.config/panel/empty_conky
+exec --no-startup-id firefox
+
+### END ###

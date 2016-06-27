@@ -1,0 +1,11 @@
+black=6D727E
+red=E75C58
+green=78a090
+yellow=bfb7a1
+blue=7c9fa6
+orange=BF9C86
+cyan=99BFBA
+white=FEF9EC
+gray=CDCDCD
+font=tamsyn-8
+font1=sourcehancodejp-7:bold
